@@ -6,12 +6,6 @@ import plotly.graph_objs as go
 userhome = os.path.expanduser('~')
 desktop = userhome + r'\Desktop'
 
-# Splitting the dataset
-def split_dataset(df, split):
-    n_rows = round(len(df) * split)
-    in_sample = df.iloc[0:len(df)-n_rows,]
-    out_sample = df.iloc[len(df)-n_rows:,]
-
 # Cluster_equity_graph
 def cluster_equity_chart(df, t_period = 100000):
 
@@ -40,4 +34,14 @@ def cluster_equity_chart(df, t_period = 100000):
                            mode = 'lines', name='Cluster {}'.format(i+1))
         traces.append(trace)
 
-    return traces
+    # Strategy drawdown options formation
+    list_strategies = [df2[df2['Cluster'] == i].index for i in range(1, 6)]
+    option_list = []
+
+    for item in list_strategies:
+        dict_st = []
+        for index, value in enumerate(item):
+            dict_st.append({'label': value, 'value': index})
+        option_list.append(dict_st)
+
+    return traces, option_list

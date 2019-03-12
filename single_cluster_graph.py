@@ -47,6 +47,9 @@ def single_cluster_graph(df, n=1, max_dw=100000):
     trace5 = go.Bar(y=MtoM.loc[n], x=MtoM.columns, name='MtoM', marker=dict(color='rgb(158,202,225)',
                  line=dict(color='rgb(8,48,107)', width=1.5), opacity=0.6))
 
+    drawdown_dict = [{'label': 'Cluster_{} -> ({})'.format(i+1, round(j)), 'value': i}
+                      for i, j in enumerate(max_drawdowns)]
+
     data = [trace1, trace2, trace3, trace4, trace5]
 
-    return data
+    return data, drawdown_dict
